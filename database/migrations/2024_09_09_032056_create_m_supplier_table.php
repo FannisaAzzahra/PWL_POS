@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('supplier_kode', 10)->unique(); // Unique code for supplier
             $table->string('supplier_nama', 100); // Supplier name
             $table->string('supplier_alamat', 255); // Supplier address
-            $table->string('notelp', 15)->nullable()->after('supplier_alamat'); // Add notelp after supplier_alamat
             $table->timestamps(); // Created at & Updated at
         });
     }

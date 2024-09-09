@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('m_supplier', function (Blueprint $table) {
-            //
+            $table->string('notelp', 15)->nullable()->after('supplier_alamat'); // Add notelp after supplier_alamat
         });
     }
 
