@@ -23,3 +23,4 @@ class UserController extends Controller
         return view('user', ['data' => $user]);
     }
 }
+
