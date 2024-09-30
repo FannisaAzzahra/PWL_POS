@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-use illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -287,8 +287,36 @@ class UserController extends Controller
         
         return redirect('/');
     }
-    
 
+    // fungsi confirm_ajax()
+    public function confirm_ajax(string $id)
+    {
+        $user = UserModel::find($id);
 
+        return view('user.confirm_ajax', ['user' => $user]);
+    }
+
+    // fungsi delete_ajax()
+    public function delete_ajax(Request $request, $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $user = UserModel::find($id);
+            if ($user) {
+                $user->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil dihapus'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('/');
+    }
 
 }
