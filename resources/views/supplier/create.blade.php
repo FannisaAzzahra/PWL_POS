@@ -11,33 +11,33 @@
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Kode Supplier</label>
                     <div class="col-11">
-                        <input type="text" class="form-control" id="supplier_kode" name="supplier_kode" value="{{ old('supplier_kode') }}" required>
+                        <input type="text" class="form-control" id="supplier_kode" name="supplier_kode"
+                            value="{{ old('supplier_kode') }}" required>
                         @error('supplier_kode')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Nama Supplier</label>
                     <div class="col-11">
-                        <input type="text" class="form-control" id="supplier_nama" name="supplier_nama" value="{{ old('supplier_nama') }}" required>
+                        <input type="text" class="form-control" id="supplier_nama" name="supplier_nama" value="{{ old('supplier_nama') }}"
+                            required>
                         @error('supplier_nama')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Alamat Supplier</label>
                     <div class="col-11">
-                        <input type="text" class="form-control" id="supplier_alamat" name="supplier_alamat" value="{{ old('supplier_alamat') }}" required>
+                        <input type="text" class="form-control" id="supplier_alamat" name="supplier_alamat" value="{{ old('supplier_alamat') }}"
+                            required>
                         @error('supplier_alamat')
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">No Telepon</label>
                     <div class="col-11">
@@ -47,7 +47,6 @@
                         @enderror
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label"></label>
                     <div class="col-11">
@@ -59,9 +58,7 @@
         </div>
     </div>
 @endsection
-
 @push('css')
 @endpush
-
 @push('js')
 @endpush

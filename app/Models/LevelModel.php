@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LevelModel extends Model
 {
@@ -13,7 +15,7 @@ class LevelModel extends Model
     protected $primaryKey = 'level_id';
 
     // Menentukan atribut yang dapat diisi (mass assignable)
-    protected $fillable = ['level_id', 'level_nama']; // Ganti dengan kolom yang sesuai
+    protected $fillable = ['level_kode', 'level_nama']; // Ganti dengan kolom yang sesuai
 
     // Hubungan dengan model lain (jika ada)
     public function users()
