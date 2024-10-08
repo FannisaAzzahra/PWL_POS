@@ -11,18 +11,17 @@ class AuthorizeUser
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) 
      */
-    public function handle(Request $request, Closure $next, $role = ''): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        $user = $request->user();
-        if ($user->hasRole($role)) {
-            return $next($request);
+        $user_role = $request->user()->getRole(); // ambil data level_kode dari user yang login
+        if (in_array($user_role, $roles)) { // cek apakah level_kode user ada di dalam array roles
+            return $next($request); // jika ada, maka lanjutkan request
         }
+        // jika tidak punya role, maka tampilkan error 403
         abort(403, 'Akses ditolak. Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. 
         Jika Anda merasa ini adalah kesalahan, silakan hubungi administrator untuk bantuan lebih lanjut.');
 
     }
 }
-
-// PADA PRAKTIKUM 2
