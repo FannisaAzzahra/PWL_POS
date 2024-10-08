@@ -19,8 +19,10 @@ class AuthorizeUser
         if ($user->hasRole($role)) {
             return $next($request);
         }
-        abort(403, 'Akses ditolak. Maaf, kamu tidak memiliki izin untuk mengakses halaman ini. 
-        Silakan hubungi administrator jika kamu merasa ini adalah kesalahan.');
+        abort(403, 'Akses ditolak. Maaf, Anda tidak memiliki izin untuk mengakses halaman ini. 
+        Jika Anda merasa ini adalah kesalahan, silakan hubungi administrator untuk bantuan lebih lanjut.');
 
     }
 }
+
+// PADA PRAKTIKUM 2
