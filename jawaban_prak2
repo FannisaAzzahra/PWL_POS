@@ -1,0 +1,18 @@
+Apa yang kalian pahami pada praktikum 2 ini?
+-	Pada praktikum ini, kita akan fokus pada penerapan sistem otorisasi untuk mengelola akses pengguna berdasarkan level mereka. Dengan mengatur hak akses, hanya pengguna dengan peran sebagai administrator yang diizinkan untuk mengakses menu level_user. 
+-	Hal ini bertujuan untuk menjaga keamanan dan integritas data, serta memastikan bahwa hanya individu yang berwenang yang dapat melakukan perubahan atau melihat informasi sensitif. Dengan demikian, pengguna lain di luar administrator akan secara otomatis ditolak aksesnya ketika mencoba mengunjungi halaman level_user, yang mendemonstrasikan efektivitas mekanisme otorisasi yang kita terapkan.
+
+
+Amati dan jelaskan tiap tahapan yang kalian kerjakan, dan jabarkan dalam laporan
+1. UserModel.php
+•	getRoleName(): Mengembalikan nama peran pengguna dari properti level_nama.
+•	hasRole($role): Memeriksa apakah pengguna memiliki peran tertentu dengan membandingkan level_kode.
+
+2. Kernel.php
+•	'authorize' => \App\Http\Middleware\AuthorizeUser::class: Mendefinisikan alias untuk middleware AuthorizeUser, yang digunakan untuk memeriksa izin akses pengguna.
+
+3. AuthorizeUser.php
+•	handle(Request $request, Closure $next, $role = ''): Middleware ini mengecek apakah pengguna memiliki peran yang sesuai. Jika ya, permintaan diteruskan; jika tidak, akses ditolak dengan pesan kesalahan (403).
+
+4. route/web.php
+•	Route::middleware(['authorize:ADM'])->group(...): Mengelompokkan rute yang hanya dapat diakses oleh pengguna dengan peran 'ADM' (Administrator).
