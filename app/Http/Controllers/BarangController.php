@@ -53,7 +53,9 @@ class BarangController extends Controller
                 //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 // return $btn;
 
-                $btn = '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                // $btn = '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                
+                $btn = '<a href="' . url('/barang/' . $barang->barang_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
 
@@ -300,6 +302,23 @@ class BarangController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    // 7. public function show_ajax(string $id)
+    public function show_ajax(string $id)
+
+    {
+        $barang = BarangModel::find($id);
+
+        // Cek apakah data barang ditemukan
+        if (!$barang) {
+            return response()->json([
+                'message' => 'Barang tidak ditemukan.'
+            ], 404); // Mengembalikan respons 404 jika barang tidak ditemukan
+        }
+
+        // Mengembalikan view dengan data barang
+        return view('barang.show_ajax', ['barang' => $barang]);
     }
 
 }

@@ -31,7 +31,7 @@
                     </tr>
                     <tr>
                         <th>No Telepon</th>
-                        <td>{{ $supplier->no_telp }}</td>
+                        <td>{{ $supplier->notelp }}</td>
                     </tr>
                 </table>
             @endempty
