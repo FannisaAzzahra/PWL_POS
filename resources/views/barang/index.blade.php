@@ -7,8 +7,8 @@
         <div class="card-tools">
             <!-- Tombol untuk Import Barang -->
             <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
-            <!-- Tombol Tambah Data Barang -->
-            <a href="{{ url('/barang/create') }}" class="btn btn-primary">Tambah Data</a>
+            <!-- Tombol untuk Export Data ke Excel -->
+            <a href="{{ url('/barang/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Barang</a>
             <!-- Tombol Tambah Data (Ajax) -->
             <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
         </div>

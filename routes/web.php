@@ -111,6 +111,7 @@ Route::middleware(['auth'])->group(function() { // Semua route di bawah ini memb
         // Route::get('/barang/{id}/show_ajax', [BarangController::class, 'show_ajax']); // menampilkan detail barang dalam mode Ajax
         Route::get('/barang/import', [BarangController::class, 'import']); // ajax form upload excel
         Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
+        Route::get('/barang/export_excel', [BarangController::class, 'export_excel']); // export excel
 
     });
 
