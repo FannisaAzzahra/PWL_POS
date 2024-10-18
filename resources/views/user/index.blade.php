@@ -40,6 +40,7 @@
                     <th>Username</th>
                     <th>Nama</th>
                     <th>Level Pengguna</th>
+                    <th>Foto</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -111,6 +112,13 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     className: "",
                     width: "14%",
                     orderable: false, 
+                    searchable: false
+                },
+                {
+                    data: "foto",
+                    className: "",
+                    width: "14%",
+                    orderable: false,
                     searchable: false
                 },
                 {

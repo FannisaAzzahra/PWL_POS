@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -34,7 +36,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
         // Ambil data user beserta levelnya
-        $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
+        $users = UserModel::select('user_id', 'username', 'nama', 'foto', 'level_id')
             ->with('level'); // memuat relasi level
         
         // Filter data user berdasarkan level_id
@@ -208,6 +210,7 @@ class UserController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username',
             'nama'     => 'required|string|max:100',
             'password' => 'required|min:5',
+            'foto'      => 'image|mimes:jpeg,png,jpg|max:2048'
         ];
 
         // use illuminate\Support\Facades\Validator
@@ -221,6 +224,11 @@ class UserController extends Controller
                 'msgField' => $validator->errors(), // pesan error validasi
             ]);
         }
+
+        $fileName = time() . $request->file('foto')->getClientOriginalExtension();
+        $path = $request->file('foto')->storeAs('images', $fileName);
+        $request['foto'] = '/storage/' . $path;
+
 
         // Simpan data user ke dalam database
         UserModel::create($request->all());
@@ -252,7 +260,8 @@ class UserController extends Controller
                 'level_id' => 'required|integer',
                 'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
                 'nama' => 'required|max:100',
-                'password' => 'nullable|min:5|max:20'
+                'password' => 'nullable|min:5|max:20',
+                'foto'      => 'image|mimes:jpeg,png,jpg|max:2048'
             ];
             
             // use Illuminate\Support\Facades\Validator;
@@ -271,6 +280,13 @@ class UserController extends Controller
             if ($check) {
                 if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
                     $request->request->remove('password');
+                }
+
+                $fileName = time() . $request->file('foto')->getClientOriginalExtension();
+                $path = $request->file('foto')->storeAs('images', $fileName);
+                $request['foto'] = '/storage/' . $path;
+                if (!$request->filled('foto')) { // jika password tidak diisi, maka hapus dari request 
+                    $request->request->remove('foto');
                 }
                 
                 $check->update($request->all());
