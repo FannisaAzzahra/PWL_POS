@@ -134,6 +134,9 @@ Route::middleware(['auth'])->group(function() { // Semua route di bawah ini memb
         Route::get('/barang/export_excel', [BarangController::class, 'export_excel']); // export excel
         Route::get('/barang/export_pdf', [BarangController::class, 'export_pdf']); // export excel
 
+
+
+        
     });
 
 });
