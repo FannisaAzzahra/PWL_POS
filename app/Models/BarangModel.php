@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BarangModel extends Model
 {
@@ -29,6 +30,11 @@ class BarangModel extends Model
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(KategoriModel::class, 'kategori_id', 'kategori_id');
+    }
+
+    public function barang():HasMany
+    {
+        return $this->hasMany(StokModel::class, 'stok_id', 'stok_id');
     }
 
     // Tambahkan metode atau logika lain yang diperlukan untuk model ini

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SupplierModel extends Model
 {
@@ -22,4 +23,9 @@ class SupplierModel extends Model
         'supplier_alamat', 
         'notelp'
     ];
+
+    public function barang():HasMany
+    {
+        return $this->hasMany(StokModel::class, 'stok_id', 'stok_id');
+    }
 }
