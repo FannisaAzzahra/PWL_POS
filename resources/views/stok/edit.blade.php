@@ -18,16 +18,16 @@
                     {!! method_field('PUT') !!} <!-- tambahkan baris ini untuk proses edit yang butuh
                     method PUT -->
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Stok</label>
+                        <label class="col-1 control-label col-form-label">Supplier</label>
                         <div class="col-11">
-                            <select class="form-control" id="stok_id" name="stok_id" required>
-                                <option value="">- Pilih Stok -</option>
-                                @foreach ($stok as $item)
-                                    <option value="{{ $item->stok_id }}" @if ($item->stok_id == $stok->stok_id) selected @endif>
-                                        {{ $item->stok_nama }}</option>
+                            <select class="form-control" id="supplier_id" name="supplier_id" required>
+                                <option value="">- Pilih supplier -</option>
+                                @foreach ($supplier as $item)
+                                    <option value="{{ $item->supplier_id }}" @if ($item->supplier_id == $stok->supplier_id) selected @endif>
+                                        {{ $item->supplier_nama }}</option>
                                 @endforeach
                             </select>
-                            @error('stok_id')
+                            @error('supplier_id')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -54,7 +54,7 @@
                                 <option value="">- Pilih user -</option>
                                 @foreach ($user as $item)
                                     <option value="{{ $item->user_id }}" @if ($item->user_id == $stok->user_id) selected @endif>
-                                        {{ $item->name }}</option>
+                                        {{ $item->username }}</option>
                                 @endforeach
                             </select>
                             @error('user_id')
@@ -66,7 +66,7 @@
                         <label class="col-1 control-label col-form-label">Stok Tanggal</label>
                         <div class="col-11">
                             <input type="text" class="form-control" id="stok_tanggal" name="stok_tanggal"
-                                value="{{ old('stok_tanggal', $stok->stok_tanggal->format('Y-m-d')) }}" required>
+                                value="{{ old('stok_tanggal', $stok->stok_tanggal) }}" required>
                             @error('stok_tanggal')
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror

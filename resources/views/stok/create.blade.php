@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">Barang</label>
+                    <label class="col-1 control-label col-form-label">barang</label>
                     <div class="col-11">
                         <select class="form-control" id="barang_id" name="barang_id" required>
                             <option value="">- Pilih barang -</option>
@@ -37,12 +37,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">User</label>
+                    <label class="col-1 control-label col-form-label">user</label>
                     <div class="col-11">
                         <select class="form-control" id="user_id" name="user_id" required>
                             <option value="">- Pilih user -</option>
                             @foreach ($user as $item)
-                                <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
+                                <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                             @endforeach
                         </select>
                         @error('user_id')
