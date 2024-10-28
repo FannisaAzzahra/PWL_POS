@@ -13,12 +13,9 @@
                     <label>Kategori</label>
                     <select name="kategori_id" id="kategori_id" class="form-control" required>
                         <option value="">Pilih Kategori</option>
-                        <!-- Contoh opsi kategori, sesuaikan dengan data kategori yang ada -->
-                        <option value="1">Elektronik</option>
-                        <option value="2">Pakaian</option>
-                        <option value="3">Makanan</option>
-                        <option value="4">Kecantikan</option>
-                        <option value="5">Peralatan Rumah Tangga</option>
+                        @foreach($kategori as $l)
+                            <option value="{{ $l->kategori_id }}">{{ $l->kategori_nama }}</option>
+                        @endforeach
                     </select>
                     <small id="error-kategori_id" class="error-text form-text text-danger"></small>
                 </div>

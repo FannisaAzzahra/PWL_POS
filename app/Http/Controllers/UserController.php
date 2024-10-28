@@ -210,7 +210,7 @@ class UserController extends Controller
             'username' => 'required|string|min:3|unique:m_user,username',
             'nama'     => 'required|string|max:100',
             'password' => 'required|min:5',
-            'foto'      => 'image|mimes:jpeg,png,jpg|max:2048'
+            'foto'      => 'nullable|mimes:jpeg,png,jpg|max:2048'
         ];
 
         // use illuminate\Support\Facades\Validator
@@ -225,13 +225,26 @@ class UserController extends Controller
             ]);
         }
 
-        $fileName = time() . $request->file('foto')->getClientOriginalExtension();
-        $path = $request->file('foto')->storeAs('images', $fileName);
-        $request['foto'] = '/storage/' . $path;
+        // $fileName = time() . $request->file('foto')->getClientOriginalExtension();
+        // $path = $request->file('foto')->storeAs('images', $fileName);
+        // $request['foto'] = '/storage/' . $path;
+        if ($request->has('foto')) {
+            $file = $request->file('foto');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'image/profile/';
+            $file->move($path, $filename);
+        }
 
 
         // Simpan data user ke dalam database
-        UserModel::create($request->all());
+        UserModel::create([
+            'username'  => $request->username,
+            'nama'      => $request->nama,
+            'password'  => bcrypt($request->password),
+            'level_id'  => $request->level_id,
+            'foto'      => $path . $filename
+        ]);
         // Jika berhasil, kembalikan response sukses dalam format JSON
         return response()->json([
             'status' => true,
@@ -261,7 +274,7 @@ class UserController extends Controller
                 'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
                 'nama' => 'required|max:100',
                 'password' => 'nullable|min:5|max:20',
-                'foto'      => 'image|mimes:jpeg,png,jpg|max:2048'
+                'foto'      => 'nullable|mimes:jpeg,png,jpg|max:2048'
             ];
             
             // use Illuminate\Support\Facades\Validator;
@@ -282,14 +295,30 @@ class UserController extends Controller
                     $request->request->remove('password');
                 }
 
-                $fileName = time() . $request->file('foto')->getClientOriginalExtension();
-                $path = $request->file('foto')->storeAs('images', $fileName);
-                $request['foto'] = '/storage/' . $path;
+                // $fileName = time() . $request->file('foto')->getClientOriginalExtension();
+                // $path = $request->file('foto')->storeAs('images', $fileName);
+                // $request['foto'] = '/storage/' . $path;
+
+                if ($request->has('foto')) {
+                    $file = $request->file('foto');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $extension;
+                    $path = 'image/profile/';
+                    $file->move($path, $filename);
+                }
+
+
                 if (!$request->filled('foto')) { // jika password tidak diisi, maka hapus dari request 
                     $request->request->remove('foto');
                 }
                 
-                $check->update($request->all());
+                $check->update([
+                    'username'  => $request->username,
+                    'nama'      => $request->nama,
+                    'password'  => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
+                    'level_id'  => $request->level_id,
+                    'foto'      => $path.$filename
+                ]);
                 
                 return response()->json([
                     'status' => true,

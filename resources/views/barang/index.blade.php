@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="card">
+<div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Daftar Barang</h3>
         <div class="card-tools">
@@ -45,7 +45,7 @@
         @endif
         
         <!-- Tabel Barang -->
-        <table class="table table-bordered table-sm table-striped table-hover" id="table-barang">
+        <table class="table table-bordered table-sm table-striped table-hover" id="table_barang">
             <thead>
                 <tr>
                     <th>No</th>
@@ -67,6 +67,120 @@
 
 @endsection
 
+@push('css')
+<style>
+    /* Card Styling */
+    .card {
+        background: #ffffff; /* Putih untuk tampilan yang bersih */
+        border-radius: 10px; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+        transition: transform 0.2s ease; 
+    }
+
+    .card:hover {
+        transform: translateY(-5px); 
+    }
+
+    .card-header {
+        background: #007bff; /* Biru yang lebih lembut */
+        color: white;
+        border-top-left-radius: 10px; 
+        border-top-right-radius: 10px; 
+        padding: 15px; 
+        font-weight: bold; 
+        box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.1); 
+    }
+
+    .card-tools .btn {
+        margin-right: 8px; 
+        border-radius: 20px; 
+        padding: 6px 12px; 
+        transition: background 0.3s ease; 
+    }
+
+    .btn-success {
+        background: #28a745; /* Hijau yang lembut */
+        border: none; 
+        color: white; 
+    }
+
+    .btn-warning {
+        background: #ffc107; /* Kuning lembut */
+        border: none; 
+        color: black; 
+    }
+
+    .btn-primary {
+        background: #0056b3; /* Biru gelap */
+        border: none; 
+        color: white; 
+    }
+
+    .btn-info {
+        background: #17a2b8; /* Biru tua yang lebih lembut */
+        border: none; 
+        color: white; 
+    }
+
+    .btn:hover {
+        opacity: 0.9; 
+    }
+
+    /* Table Styling */
+    #table_level {
+        border-collapse: separate; 
+        border-spacing: 0 10px; 
+    }
+
+    #table_level thead {
+        background: #007bff; 
+        color: white; 
+        border-radius: 10px; 
+    }
+
+    #table_level tbody tr {
+        background: #f8f9fa; 
+        border-radius: 10px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        transition: background 0.3s, transform 0.3s; 
+    }
+
+    #table_level tbody tr:hover {
+        background: #e2e6ea; 
+        transform: scale(1.02); 
+    }
+
+    /* Modal Styling */
+    .modal-content {
+        background: #ffffff; 
+        border-radius: 10px; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    }
+
+    /* Alerts Styling */
+    .alert {
+        border-radius: 10px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        padding: 10px 15px; 
+    }
+
+    /* Input Search Custom */
+    #table-level_filter input {
+        border-radius: 20px; 
+        padding: 8px 15px; 
+        border: 1px solid #ddd; 
+        outline: none; 
+        transition: border-color 0.3s, box-shadow 0.3s; 
+    }
+
+    #table-level_filter input:focus {
+        border-color: #007bff; 
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
+    }
+</style>
+@endpush
+
+
 @push('js')
 <script>
     // Fungsi modalAction untuk memuat konten ke dalam modal
@@ -78,7 +192,7 @@
 
     var tableBarang;
     $(document).ready(function(){
-        tableBarang = $('#table-barang').DataTable({ 
+        tableBarang = $('#table_barang').DataTable({ 
             processing: true,
             serverSide: true, 
             ajax: {
@@ -90,7 +204,7 @@
                 }
             },
             columns: [
-                { data: "kategori.kategori_id", className: "text-center", width: "5%", orderable: false, searchable: false },
+                { data: "DT_RowIndex", className: "text-center", width: "5%", orderable: false, searchable: false },
                 { data: "barang_kode", className: "", width: "10%", orderable: true, searchable: true },
                 { data: "barang_nama", className: "", width: "37%", orderable: true, searchable: true },
                 { 
@@ -123,7 +237,11 @@
                 }
             ]
         });
-
+        $('#table_barang_filter input').unbind().bind().on('keyup', function(e) {
+            if (e.keyCode == 13) { // enter key
+                    tableBarang.search(this.value).draw();
+                }
+        });
         $('.filter_kategori').change(function(){ 
             tableBarang.draw(); 
         });
