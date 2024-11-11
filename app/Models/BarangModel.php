@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class BarangModel extends Model
 {
@@ -23,7 +24,8 @@ class BarangModel extends Model
         'barang_kode', 
         'barang_nama', 
         'harga_beli', 
-        'harga_jual'
+        'harga_jual',
+        'image'
     ];
 
     // Hubungan dengan model Kategori
@@ -41,5 +43,10 @@ class BarangModel extends Model
         return $this->hasMany(DetailModel::class, 'barang_id', 'barang_id');
     }
 
+    protected function image(): Attribute{
+        return Attribute::make(
+            get: fn ($image) => url($image),
+        );
+    }
     // Tambahkan metode atau logika lain yang diperlukan untuk model ini
 }

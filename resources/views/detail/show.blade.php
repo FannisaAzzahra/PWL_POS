@@ -33,6 +33,10 @@
                         <th>Jumlah</th>
                         <td>{{ $detail->jumlah }}</td>
                     </tr>
+                    <tr>
+                        <th>Image</th>
+                        <td><img src=" {{ asset($detail->barang->image) }} " height="100" alt="no photo"></td>
+                    </tr>
                     
                 </table>
             @endempty

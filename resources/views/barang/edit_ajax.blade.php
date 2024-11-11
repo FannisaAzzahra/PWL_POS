@@ -31,7 +31,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Kode Barang</label>
-                        <input value="{{ $barang->barang_kode }}" type="text" name="barang_kode" id="barang_kode" class="form-control" required>
+                        <input placeholder="{{ $barang->barang_kode }}" type="text" name="barang_kode" id="barang_kode" class="form-control">
                         <small id="error-barang_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
@@ -61,6 +61,15 @@
                         <input value="{{ $barang->harga_jual }}" type="number" name="harga_jual" id="harga_jual" class="form-control" required>
                         <small id="error-harga_jual" class="error-text form-text text-danger"></small>
                     </div>
+
+                    <div class="form-group">
+                            <label>Foto</label>
+                            <input type="file" name="image" id="image" class="form-control"
+                                accept=".png,.jpg,.jpeg">
+                            <small class="form-text text-muted">Abaikan jika tidak ingin ubah
+                                foto</small>
+                            <small id="error-image" class="error-text form-text text-danger"></small>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
@@ -73,11 +82,12 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    barang_kode: { required: true, minlength: 1 },
+                    barang_kode: { required: false, minlength: 1 },
                     barang_nama: { required: true, minlength: 3 },
                     kategori_id: { required: true },
                     harga_beli: { required: true, min: 0 },
-                    harga_jual: { required: true, min: 0 }
+                    harga_jual: { required: true, min: 0 },
+                    image: { accept: "png,jpg,jpeg" }
                 },
                 submitHandler: function(form) {
                     $.ajax({

@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\SupplierModel;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 
 class BarangController extends Controller
@@ -211,10 +212,11 @@ class BarangController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'kategori_id'   => 'required|integer',
-                'barang_kode'   => 'required|string|min:3|unique:m_barang,barang_kode',
+                'barang_kode'   => 'nullable|string|min:3|unique:m_barang,barang_kode',
                 'barang_nama'   => 'required|string|max:100', // nama harus diisi, berupa string, dan maksimal 100 karakter
                 'harga_beli'    => 'required|integer',
                 'harga_jual'    => 'required|integer',
+                'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -266,6 +268,38 @@ class BarangController extends Controller
             }
             $check = BarangModel::find($id);
             if ($check) {
+
+                if (!$request->filled('barang_kode')) { // jika password tidak diisi, maka hapus dari request 
+                    $request->request->remove('barang_kode');
+                }
+                if (!$request->filled('image')) { // jika password tidak diisi, maka hapus dari request 
+                    $request->request->remove('image');
+                }
+                if (isset($check->image)) {
+                    $fileold = $check->image;
+                    if (Storage::disk('public')->exists($fileold)) {
+                        Storage::disk('public')->delete($fileold);
+                    }
+                        $file = $request->file('image');
+                        $filename = $check->image;
+                        $path = 'image/barang/';
+                        $file->move($path, $filename);
+                        $pathname = $filename;
+                        $request['image'] = $pathname;
+
+                } else {
+                        $file = $request->file('image');
+                        $extension = $file->getClientOriginalExtension();
+
+                        $filename = time() . '.' . $extension;
+
+                        $path = 'image/barang/';
+                        $file->move($path, $filename);
+                        $pathname = $filename;
+                        $request['image'] = $pathname;
+
+                }
+
                 $check->update($request->all());
                 return response()->json([
                     'status' => true,
